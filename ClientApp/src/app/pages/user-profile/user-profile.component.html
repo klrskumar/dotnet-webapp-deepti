@@ -1,0 +1,127 @@
+<div class="container db-social">
+  <div class="jumbotron jumbotron-fluid"></div>
+  <div class="container-fluid">
+    <div class="row justify-content-center">
+      <div class="col-xl-11">
+        <div class="widget head-profile has-shadow">
+          <div class="widget-body pb-0">
+            <div class="row d-flex align-items-center">
+              <div
+                class="
+                  col-xl-4 col-md-4
+                  d-flex
+                  justify-content-lg-start
+                  justify-content-md-start
+                  justify-content-center
+                "
+              >
+                <ul>
+                  <li>
+                    <div class="counter">
+                      {{ user?.followers / 1000 | number: '1.0-1' }}k
+                    </div>
+                    <div class="heading">Followers</div>
+                  </li>
+
+                  <li>
+                    <div class="counter">{{ user?.following }}</div>
+                    <div class="heading">Following</div>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-xl-4 col-md-4 d-flex justify-content-center">
+                <div class="image-default">
+                  <img
+                    class="rounded-circle"
+                    [src]="user?.avatar_url"
+                    alt="..."
+                  />
+                </div>
+                <div class="infos">
+                  <h2>{{ user?.name }}</h2>
+                  <div class="location">{{ user?.login }}</div>
+                </div>
+              </div>
+              <div
+                class="
+                  col-xl-4 col-md-4
+                  d-flex
+                  justify-content-lg-end
+                  justify-content-md-end
+                  justify-content-center
+                "
+              >
+                <div class="follow">
+                  <button
+                    type="button"
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    class="btn btn-shadow"
+                    (click)="show()"
+                  >
+                    <i class="la la-user-plus"></i>Add To Favourite
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>
+    Repositories
+    <span class="badge badge-secondary">{{ user?.public_repos }}</span>
+  </h4>
+  <div class="list-group">
+    <a
+      *ngFor="let repo of repos"
+      class="
+        list-group-item list-group-item-action
+        flex-column
+        align-items-start
+      "
+    >
+      <div class="d-flex w-100 justify-content-between">
+        <h5 class="mb-1">{{ repo?.name }}</h5>
+        <small>{{ repo?.created_at | date }}</small>
+      </div>
+      <small class="mb-1">{{ repo?.full_name }}</small>
+      <p class="mb-1">{{ repo?.description }}</p>
+      <small>{{ repo?.language }}</small>
+    </a>
+  </div>
+</div>
+
+<div class="modal fade show" tabindex="-1" role="dialog" [ngStyle]="style">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add To Favourite</h5>
+        <button type="button" class="close" (click)="hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Notes</label>
+          <textarea
+            [(ngModel)]="notes"
+            class="form-control"
+            id="exampleFormControlTextarea1"
+            rows="3"
+          ></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="hide()">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary" (click)="saveFavourite()">
+          Save
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
